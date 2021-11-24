@@ -2,7 +2,9 @@ import path from "path";
 
 import { createApp } from "./index";
 
-process.env.NODE_ENV = "production";
+// set NODE_ENV to production by default, but allow overriding
+process.env.NODE_ENV ||= "production";
+
 let port = process.env.PORT || 3000;
 let buildPathArg = process.argv[2];
 
@@ -14,6 +16,8 @@ if (!buildPathArg) {
 
 let buildPath = path.resolve(process.cwd(), buildPathArg);
 
+console.log(`[remix-serve] NODE_ENV: ${process.env.NODE_ENV}`);
+
 createApp(buildPath).listen(port, () => {
-  console.log(`Remix App Server started at http://localhost:${port}`);
+  console.log(`[remix-serve] Remix App Server started at http://localhost:${port}`);
 });
